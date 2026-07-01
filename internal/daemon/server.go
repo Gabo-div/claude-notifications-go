@@ -273,6 +273,13 @@ func (s *Server) handleNotification(req *NotifyRequest) (*NotifyResponse, error)
 		},
 	}
 
+	// Deliver the icon via the "image-path" hint (like `notify-send -i`) rather than the
+	// app_icon positional argument. Some notification shells (e.g. Quickshell) apply their
+	// rounded image mask to image-path but render app_icon unmasked/square and overflowing.
+	if req.AppIcon != "" {
+		n.Hints["image-path"] = dbus.MakeVariant(req.AppIcon)
+	}
+
 	// Send notification
 	id, err := s.notifier.SendNotification(n)
 	if err != nil {

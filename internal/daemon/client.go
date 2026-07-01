@@ -41,6 +41,7 @@ func NewClient() (*Client, error) {
 func (c *Client) SendNotification(
 	title,
 	body,
+	appIcon,
 	focusTarget,
 	focusFolder,
 	focusWindowID,
@@ -55,6 +56,7 @@ func (c *Client) SendNotification(
 		Notify: &NotifyRequest{
 			Title:              title,
 			Body:               body,
+			AppIcon:            appIcon,
 			FocusTarget:        focusTarget,
 			FocusFolder:        focusFolder,
 			FocusWindowID:      focusWindowID,
