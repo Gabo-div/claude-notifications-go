@@ -5,6 +5,7 @@
       "sound": true,
       "volume": 1.0,
       "appIcon": "${CLAUDE_PLUGIN_ROOT}/claude_icon.png",
+      "showSessionLabel": true,
       "clickToFocus": true,
       "terminalBundleId": ""
     },

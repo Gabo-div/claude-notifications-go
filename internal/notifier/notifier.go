@@ -93,11 +93,14 @@ func (n *Notifier) SendDesktop(status analyzer.Status, message, sessionID, cwd s
 
 	// Extract session name, git branch and folder name from message
 	// Format: "[session-name|branch folder] actual message" or "[session-name folder] actual message"
-	_, gitBranch, cleanMessage := extractSessionInfo(message)
+	sessionName, gitBranch, cleanMessage := extractSessionInfo(message)
 
-	// Title is the status only, no session-label suffix.
-	// Format: "✅ Completed"
+	// Build title: status, plus optional session-label suffix (config-gated, default on).
+	// Format: "✅ Completed [peak]" or "✅ Completed"
 	title := statusInfo.Title
+	if sessionName != "" && n.cfg.IsSessionLabelEnabled() {
+		title = fmt.Sprintf("%s [%s]", title, sessionName)
+	}
 
 	// Build subtitle from branch and folder name
 	// Format: "main · notification_plugin_go" or just folder name
